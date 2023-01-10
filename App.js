@@ -1,14 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
 
-export default function App() {
+const App = () => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <FlatList
+        data={mediaArray}
+        renderItem = {(item) => {
+          return (
+            <TouchableOpacity>
+              <Image
+              style={{width:100, height:100}}
+              source={{uri: item.thumbnail}}
+              />
+              <View>
+                <Text>{item.title}</Text>
+                <Text>{item.description}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
+        />
       <StatusBar style="auto" />
     </View>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
