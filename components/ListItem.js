@@ -19,7 +19,7 @@ const ListItem = ({singleMedia, navigation}) => {
       </View>
       <View style={styles.box}>
         <Text style={styles.listTitle}>{item.title}</Text>
-        <Text>{item.description}</Text>
+        <Text style={styles.listDescription}>{item.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,22 +27,28 @@ const ListItem = ({singleMedia, navigation}) => {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    backgroundColor: '#ccc',
-    marginBottom: 10,
+    flexDirection: 'column',
+    backgroundColor: '#6A8E7F',
+    marginBottom: 40,
   },
   box: {
     flex: 1,
-    padding: 10,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
   },
   image: {
     flex: 1,
-    minHeight: 100,
+    minHeight: 200,
   },
   listTitle: {
     fontWeight: 'bold',
+    fontFamily: 'LatoBold',
     fontSize: 20,
     paddingBottom: 15,
+  },
+  listDescription: {
+    fontFamily: 'LatoRegular',
+    fontSize: 14,
   },
 });
 

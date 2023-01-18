@@ -12,7 +12,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#77A6F7',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,

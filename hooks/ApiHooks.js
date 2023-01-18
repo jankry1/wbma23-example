@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import {useState, useEffect} from 'react';
 import {uploadsUrl, loginUrl, baseUrl} from '../utils/variables.js';
+import * as React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {useFonts} from 'expo-font';
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);

@@ -25,11 +25,18 @@ const TabScreen = () => {
 
             return <Ionicons name={iconName} />;
           },
+          tabBarStyle: {
+            backgroundColor: '#D3E3FC',
+          },
         };
       }}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };
