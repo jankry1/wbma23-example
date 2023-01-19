@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     fontFamily: 'LatoBold',
     fontSize: 20,
     paddingBottom: 15,
+    alignItems: 'center',
   },
   listDescription: {
     fontFamily: 'LatoRegular',

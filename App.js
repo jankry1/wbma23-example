@@ -1,6 +1,7 @@
 import {StatusBar} from 'expo-status-bar';
 import Navigator from './navigators/Navigator';
 import {useFonts} from 'expo-font';
+import {MainProvider} from './contexts/MainContext';
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -11,10 +12,10 @@ const App = () => {
     LatoThinItalic: require('./assets/fonts/LatoThinItalic.ttf'),
   });
   return (
-    <>
+    <MainProvider>
       <Navigator />
       <StatusBar backgroundColor="#D3E3FC" />
-    </>
+    </MainProvider>
   );
 };
 
