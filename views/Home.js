@@ -14,12 +14,6 @@ import {Ionicons} from '@expo/vector-icons';
 const Home = ({navigation}) => {
   return (
     <>
-      <Ionicons
-        name="settings-outline"
-        size={25}
-        color="black"
-        style={{position: 'absolute', top: 20, left: 340, zIndex: 1}}
-      />
       <ImageBackground
         source={require('../assets/background.jpg')}
         resizeMode="cover"

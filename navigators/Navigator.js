@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Single from '../views/Single';
+import Settings from '../views/Settings';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,12 +18,13 @@ const TabScreen = () => {
         return {
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
-            if (route.name === 'Home') {
+            if (route.name === 'Settings') {
+              iconName = 'settings';
+            } else if (route.name === 'Home') {
               iconName = 'home';
             } else if (route.name === 'Profile') {
               iconName = 'person';
             }
-
             return <Ionicons name={iconName} />;
           },
           tabBarStyle: {
@@ -31,6 +33,11 @@ const TabScreen = () => {
         };
       }}
     >
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{headerShown: false}}
+      />
       <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
       <Tab.Screen
         name="Profile"
@@ -43,13 +50,29 @@ const TabScreen = () => {
 
 const StackScreen = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#77A6F7',
+        },
+        headerTintColor: 'black',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontFamily: 'LatoBold',
+        },
+      }}
+    >
       <Stack.Screen
         name="Tabs"
         component={TabScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="Single" component={Single} />
+      <Stack.Screen
+        name="Single"
+        component={Single}
+        options={({route}) => ({title: route.params.title})}
+        headerStyle={{backgroundColor: '#D3E3FC'}}
+      />
     </Stack.Navigator>
   );
 };
