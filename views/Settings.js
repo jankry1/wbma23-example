@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = () => {
   const {setIsLoggedIn} = useContext(MainContext);
@@ -11,8 +12,13 @@ const Settings = () => {
       <Button
         style={styles.button}
         title="Log out"
-        onPress={() => {
+        onPress={async () => {
           setIsLoggedIn(false);
+          try {
+            await AsyncStorage.clear();
+          } catch (e) {
+            console.warn('clearing asyncstorage faild', e);
+          }
         }}
       />
     </SafeAreaView>
