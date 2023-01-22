@@ -4,6 +4,16 @@ import {uploadsUrl, loginUrl, baseUrl} from '../utils/variables.js';
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useFonts} from 'expo-font';
+import {DefaultTheme} from '@react-navigation/native';
+
+const doFetch = async (url, options) => {
+  const response = await fetch(url, options);
+  const json = response.json();
+  if (!response.ok) {
+    throw new Error(json.error || json.message);
+  }
+  return json;
+};
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
@@ -32,4 +42,37 @@ const useMedia = () => {
   return {mediaArray};
 };
 
-export {useMedia};
+const useAuthentication = () => {
+  const postLogin = async (userCredential) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userCredential),
+    };
+    try {
+      return await doFetch(baseUrl + 'login', options);
+    } catch (e) {
+      throw new Error('postLogin' + e.message);
+    }
+  };
+  return {postLogin};
+};
+
+const useUser = () => {
+  const getUserByToken = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    try {
+      return await doFetch(baseUrl + 'users/user', options);
+    } catch (e) {
+      throw new Error('checkUser' + e.message);
+    }
+  };
+  return {getUserByToken};
+};
+
+export {useMedia, useAuthentication, useUser};
