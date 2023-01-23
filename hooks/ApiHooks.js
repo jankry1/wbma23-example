@@ -72,7 +72,21 @@ const useUser = () => {
       throw new Error('checkUser' + e.message);
     }
   };
-  return {getUserByToken};
+  const postUser = async (userData) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    };
+    try {
+      return await doFetch(baseUrl + 'users', options);
+    } catch (e) {
+      throw new Error('postUser' + e.message);
+    }
+  };
+  return {getUserByToken, postUser};
 };
 
 export {useMedia, useAuthentication, useUser};

@@ -4,12 +4,9 @@ import {
   SafeAreaView,
   ImageBackground,
   Text,
-  View,
-  Modal,
 } from 'react-native';
 import List from '../components/List';
 import PropTypes from 'prop-types';
-import {Ionicons} from '@expo/vector-icons';
 
 const Home = ({navigation}) => {
   return (

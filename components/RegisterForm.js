@@ -19,7 +19,7 @@ const RegisterForm = () => {
     console.log('Register button pressed', registerData);
     try {
       const registerResult = await postUser(registerData);
-
+      console.log('registerResult', registerResult);
     } catch (e) {
       console.error('register', e);
     }
@@ -34,6 +34,7 @@ const RegisterForm = () => {
           <TextInput
             placeholder="Username"
             onBlur={onBlur}
+            autoCapitalize="none"
             onChangeText={onChange}
             value={value}
           />
@@ -53,6 +54,7 @@ const RegisterForm = () => {
           <TextInput
             placeholder="Password"
             onBlur={onBlur}
+            autoCapitalize="none"
             onChangeText={onChange}
             value={value}
             secureTextEntry={true}
@@ -68,6 +70,7 @@ const RegisterForm = () => {
           <TextInput
             placeholder="Email"
             onBlur={onBlur}
+            autoCapitalize="none"
             onChangeText={onChange}
             value={value}
           />
@@ -82,6 +85,7 @@ const RegisterForm = () => {
           <TextInput
             placeholder="Full name"
             onBlur={onBlur}
+            autoCapitalize="none"
             onChangeText={onChange}
             value={value}
           />

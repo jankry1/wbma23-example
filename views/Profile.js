@@ -1,10 +1,16 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import {useContext} from 'react';
+import {MainContext} from '../contexts/MainContext';
 
 const Profile = () => {
+  const {user} = useContext(MainContext);
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <Text>Username: {user.username}</Text>
+      <Text>Email: {user.email}</Text>
+      <Text>Full name: {user.full_name}</Text>
     </SafeAreaView>
   );
 };
