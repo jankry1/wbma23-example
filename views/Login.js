@@ -1,33 +1,35 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {Button, Card, Text} from '@rneui/base';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
+  const [toggleForm, setToggleForm] = useState(true);
 
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
+      // if no token available, do nothing
       if (userToken === null) return;
       const userData = await getUserByToken(userToken);
       console.log('checkToken', userData);
       setUser(userData);
       setIsLoggedIn(true);
-    } catch (e) {
-      console.error('checkToken', e);
+    } catch (error) {
+      console.error('checkToken', error);
     }
   };
 
@@ -36,43 +38,27 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => Keyboard.dismiss()}
-      style={{flex: 1}}
-      activeOpacity={1}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <LoginForm />
-        <RegisterForm />
-      </KeyboardAvoidingView>
-    </TouchableOpacity>
+    <ScrollView>
+      <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
+        {toggleForm ? <LoginForm /> : <RegisterForm />}
+        <Card>
+          <Text>
+            {toggleForm
+              ? 'No account yet? Please register.'
+              : 'Already have an account? Please login.'}
+          </Text>
+          <Button
+            type="outline"
+            title={toggleForm ? 'Go to register' : 'Go to login'}
+            onPress={() => {
+              setToggleForm(!toggleForm);
+            }}
+          />
+        </Card>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#77A6F7',
-  },
-  text: {
-    fontSize: 30,
-    fontFamily: 'LatoBold',
-  },
-  button: {
-    fontFamily: 'LatoThin',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-  },
-});
 
 Login.propTypes = {
   navigation: PropTypes.object,

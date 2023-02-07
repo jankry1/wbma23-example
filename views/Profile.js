@@ -1,28 +1,55 @@
-import React from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
-import {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTag} from '../hooks/ApiHooks';
+import {uploadsUrl} from '../utils/variables';
+import {Button, Card, Icon, ListItem} from '@rneui/themed';
 
 const Profile = () => {
-  const {user} = useContext(MainContext);
+  const {getFilesByTag} = useTag();
+  const {setIsLoggedIn, user, setUser} = useContext(MainContext);
+  const [avatar, setAvatar] = useState('');
+
+  const loadAvatar = async () => {
+    try {
+      const avatarArray = await getFilesByTag('avatar_' + user.user_id);
+      setAvatar(avatarArray.pop().filename);
+    } catch (error) {
+      console.error('user avatar fetch failed', error.message);
+    }
+  };
+
+  useEffect(() => {
+    loadAvatar();
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <Text>Username: {user.username}</Text>
-      <Text>Email: {user.email}</Text>
-      <Text>Full name: {user.full_name}</Text>
-    </SafeAreaView>
+    <Card>
+      <Card.Title>{user.username}</Card.Title>
+      <Card.Image source={{uri: uploadsUrl + avatar}} />
+      <ListItem>
+        <Icon name="email" />
+        <ListItem.Title>{user.email}</ListItem.Title>
+      </ListItem>
+      <ListItem>
+        <Icon name="badge" />
+        <ListItem.Title>{user.full_name}</ListItem.Title>
+      </ListItem>
+      <Button
+        title="Logout!"
+        onPress={async () => {
+          console.log('Logging out!');
+          setUser({});
+          setIsLoggedIn(false);
+          try {
+            await AsyncStorage.clear();
+          } catch (error) {
+            console.error('clearing asyncstorage failed', error);
+          }
+        }}
+      />
+    </Card>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#77A6F7',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-});
 
 export default Profile;
